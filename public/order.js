@@ -10,6 +10,13 @@
 window.extAsyncInit = function() {
     // the Messenger Extensions JS SDK is done loading
 
+    MessengerExtensions.getSupportedFeatures(function success(result) {
+        let features = result.supported_features;
+        console.log(features);
+    }, function error(err) {
+        console.log(err);
+        // error retrieving supported features
+    });
     MessengerExtensions.getContext('922327838965484',
         function success(thread_context){
             console.log('Load thanh cong');
