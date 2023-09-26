@@ -38,7 +38,7 @@ let getWebhook = (req, res) => {
     }
 };
 
-let postWebhook = (req, res) => {
+let postWebhook = async (req, res) => {
     let body = req.body;
 
     // Checks this is an event from a page subscription
@@ -72,17 +72,18 @@ let postWebhook = (req, res) => {
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
                 console.log('Noi dung event 2');
-                await handleMessage(sender_psid, webhook_event.message);
+                let result = await handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
-                await handlePostback(sender_psid, webhook_event.postback);
+                let result = await handlePostback(sender_psid, webhook_event.postback);
             }
         });
-        // return true;
+        return true;
         // Returns a '200 OK' response to all requests
-        res.status(200).send('EVENT_RECEIVED');
+        //res.status(200).send('EVENT_RECEIVED');
     } else {
+        return false;
         // Returns a '404 Not Found' if event is not from a page subscription
-        res.sendStatus(404);
+        //res.sendStatus(404);
         //return false;
     }
 };
@@ -147,7 +148,9 @@ let handleMessage = async (sender_psid, received_message) => {
     }
 
     // Sends the response message
-    await chatbotService.sendMessage(sender_psid, response);
+   let result = await chatbotService.sendMessage(sender_psid, response);
+    console.log(result);
+    return result;
 };
 
 // Handles messaging_postbacks events

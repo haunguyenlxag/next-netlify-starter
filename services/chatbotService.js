@@ -77,7 +77,7 @@ let sendMessage = (sender_psid, response) => {
                 },
                 "message": response
             };
-
+            console.log('Noi dung event 6.1');
             // Send the HTTP request to the Messenger Platform
             request({
                 "uri": "https://graph.facebook.com/v16.0/me/messages",
@@ -94,6 +94,7 @@ let sendMessage = (sender_psid, response) => {
                     reject("Unable to send message:" + err);
                 }
             });
+            console.log('Noi dung event 6.2');
         } catch (e) {
             console.log('Noi dung event 9');
             console.log(e);

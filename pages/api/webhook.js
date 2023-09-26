@@ -9,7 +9,16 @@ export default async function handler(
 ) {
     console.log("Call to here");
     if (req.method === 'POST') {
-        homepageController.postWebhook(req, res);
+        let result = await homepageController.postWebhook(req, res);
+        if (result) {
+            console.log("Send thanh cong");
+            res.status(200).send('EVENT_RECEIVED');
+        }
+        else {
+            console.log("Send ERROR");
+            res.status(400).send('');
+        }
+
     } else {
         homepageController.getWebhook(req, res);
         //res.status(200).json({ name: 'GET John Doe' })
