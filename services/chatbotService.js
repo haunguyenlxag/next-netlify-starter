@@ -64,10 +64,12 @@ let sendMessageWelcomeNewUser = (sender_psid) => {
 };
 
 let sendMessage = (sender_psid, response) => {
+    console.log('Noi dung event 5');
     return new Promise(async (resolve, reject) => {
         try {
-            await homepageService.markMessageRead(sender_psid);
-            await homepageService.sendTypingOn(sender_psid);
+            console.log('Noi dung event 6');
+            //await homepageService.markMessageRead(sender_psid);
+            //await homepageService.sendTypingOn(sender_psid);
             // Construct the message body
             let request_body = {
                 "recipient": {
@@ -84,12 +86,17 @@ let sendMessage = (sender_psid, response) => {
                 "json": request_body
             }, (err, res, body) => {
                 if (!err) {
+                    console.log('Noi dung event 7');
                     resolve('message sent!')
                 } else {
+                    console.log('Noi dung event 8');
+                    console.log(err);
                     reject("Unable to send message:" + err);
                 }
             });
         } catch (e) {
+            console.log('Noi dung event 9');
+            console.log(e);
             reject(e);
         }
     });

@@ -40,7 +40,7 @@ let getWebhook = (req, res) => {
 
 let postWebhook = (req, res) => {
     let body = req.body;
-    console.log(body);
+
     // Checks this is an event from a page subscription
     if (body.object === 'page') {
         // Iterates over each entry - there may be multiple if batched
@@ -62,6 +62,7 @@ let postWebhook = (req, res) => {
 
             //     // Gets the body of the webhook event
             let webhook_event = entry.messaging[0];
+            console.log('Noi dung event');
             console.log(webhook_event);
 
             // Get the sender PSID
@@ -70,6 +71,7 @@ let postWebhook = (req, res) => {
             // Check if the event is a message or postback and
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
+                console.log('Noi dung event 2');
                 handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
                 handlePostback(sender_psid, webhook_event.postback);
@@ -107,11 +109,13 @@ let handleMessage = async (sender_psid, received_message) => {
 
     // Check if the message contains text
     if (received_message.text) {
+        console.log('Noi dung event 3');
         // Create the payload for a basic text message
         response = {
             "text": `You sent the message: "${received_message.text}". Now send me an image!`
         }
     } else if (received_message.attachments) {
+        console.log('Noi dung event 4');
         // Get the URL of the message attachment
         let attachment_url = received_message.attachments[0].payload.url;
         response = {
