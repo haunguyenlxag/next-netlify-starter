@@ -7,6 +7,8 @@ export default function handler(
     req,
     res
 ) {
+    console.log("Call to here");
+    console.log(req);
     if (req.method === 'POST') {
         homepageController.postWebhook(req, res);
     } else {
