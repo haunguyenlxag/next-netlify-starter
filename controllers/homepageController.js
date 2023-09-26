@@ -44,7 +44,7 @@ let postWebhook = (req, res) => {
     // Checks this is an event from a page subscription
     if (body.object === 'page') {
         // Iterates over each entry - there may be multiple if batched
-        body.entry.forEach(function (entry) {
+        body.entry.forEach(async function (entry) {
             //check the incoming message from primary app or not; if secondary app, exit
             if (entry.standby) {
                 //if user's message is "back" or "exit", return the conversation to the bot
@@ -72,17 +72,18 @@ let postWebhook = (req, res) => {
             // pass the event to the appropriate handler function
             if (webhook_event.message) {
                 console.log('Noi dung event 2');
-                handleMessage(sender_psid, webhook_event.message);
+                await handleMessage(sender_psid, webhook_event.message);
             } else if (webhook_event.postback) {
-                handlePostback(sender_psid, webhook_event.postback);
+                await handlePostback(sender_psid, webhook_event.postback);
             }
         });
-
+        // return true;
         // Returns a '200 OK' response to all requests
         res.status(200).send('EVENT_RECEIVED');
     } else {
         // Returns a '404 Not Found' if event is not from a page subscription
         res.sendStatus(404);
+        //return false;
     }
 };
 

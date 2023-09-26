@@ -3,7 +3,7 @@ import  { NextApiRequest, NextApiResponse } from 'next'
 import homepageController from "../../controllers/homepageController";
 
 
-export default function handler(
+export default async function handler(
     req,
     res
 ) {
